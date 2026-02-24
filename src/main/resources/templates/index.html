@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description"
+        content="Ghost Writer — AI-powered narrative shadow that analyzes your story and suggests future directions in real time.">
+    <meta name="keywords" content="AI writing assistant, story generator, narrative AI, creative writing tool">
+    <meta name="author" content="Ghost Writer">
+    <title>Ghost Writer — AI Narrative Shadow</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='56' font-size='56'>👻</text></svg>">
+</head>
+
+<body>
+
+    <!-- ─── Navbar ─── -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="nav-brand">
+                <span class="nav-logo">👻</span>
+                <span class="nav-name">Ghost Writer</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon" id="themeIcon">☀️</span>
+                </button>
+                <a href="#editor" class="nav-cta">Start Writing</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ─── Hero Section ─── -->
+    <section class="hero" id="hero">
+        <div class="hero-inner">
+            <div class="hero-badge anim-fade" data-anim="fade-up">AI-Powered Writing Assistant</div>
+            <h1 class="hero-title anim-fade" data-anim="fade-up" data-delay="1">Your Story.<br>Our Suggestions.</h1>
+            <p class="hero-subtitle anim-fade" data-anim="fade-up" data-delay="2">
+                Ghost Writer reads your narrative in real time and suggests three distinct future directions — powered
+                by
+                Google Gemini AI.
+            </p>
+            <div class="hero-actions anim-fade" data-anim="fade-up" data-delay="3">
+                <a href="#editor" class="btn-primary">
+                    <span>👻</span> Start Writing
+                </a>
+                <a href="#how-it-works" class="btn-secondary">Learn More</a>
+            </div>
+            <div class="hero-stats anim-fade" data-anim="fade-up" data-delay="4">
+                <div class="stat">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Narrative Paths</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">Genres Detected</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <div class="stat-value">PDF</div>
+                    <div class="stat-label">File Upload</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Features ─── -->
+    <section class="section" id="features">
+        <div class="section-inner">
+            <div class="section-label-tag anim-fade" data-anim="fade-up">Features</div>
+            <h2 class="section-title anim-fade" data-anim="fade-up">Everything a Writer Needs</h2>
+            <div class="features-grid">
+                <div class="feature-card anim-fade" data-anim="fade-up" data-delay="0">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Story Analysis</h3>
+                    <p>Powered by Google Gemini, Ghost Writer detects genre, tone, and key characters to generate
+                        story-specific narrative paths.</p>
+                </div>
+                <div class="feature-card anim-fade" data-anim="fade-up" data-delay="1">
+                    <div class="feature-icon">🌿</div>
+                    <h3>3 Narrative Paths</h3>
+                    <p>Every analysis produces three distinct directions — two logical continuations and one surprising
+                        twist — all deeply tied to your story.</p>
+                </div>
+                <div class="feature-card anim-fade" data-anim="fade-up" data-delay="2">
+                    <div class="feature-icon">📄</div>
+                    <h3>PDF & TXT Upload</h3>
+                    <p>Upload your manuscript as a PDF or text file. Ghost Writer extracts the text and analyzes it
+                        instantly — no copy-pasting needed.</p>
+                </div>
+                <div class="feature-card anim-fade" data-anim="fade-up" data-delay="3">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Entity Extraction</h3>
+                    <p>Automatically identifies characters, locations, and key objects from your narrative to ground
+                        every suggestion in your world.</p>
+                </div>
+                <div class="feature-card anim-fade" data-anim="fade-up" data-delay="4">
+                    <div class="feature-icon">👁️</div>
+                    <h3>Path Preview</h3>
+                    <p>Click any direction to see an expanded preview of how that path would unfold — a mini-outline
+                        before you commit.</p>
+                </div>
+                <div class="feature-card anim-fade" data-anim="fade-up" data-delay="5">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Fallback</h3>
+                    <p>No API key? No problem. The built-in template engine provides genre-matched suggestions so the
+                        app always works.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── How It Works ─── -->
+    <section class="section section-alt" id="how-it-works">
+        <div class="section-inner">
+            <div class="section-label-tag anim-fade" data-anim="fade-up">How It Works</div>
+            <h2 class="section-title anim-fade" data-anim="fade-up">Three Simple Steps</h2>
+            <div class="steps">
+                <div class="step anim-fade" data-anim="fade-left" data-delay="0">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h3>Write or Upload</h3>
+                        <p>Type your story directly into the editor or upload a PDF/TXT file. Add optional context for
+                            longer narratives.</p>
+                    </div>
+                </div>
+                <div class="step anim-fade" data-anim="fade-left" data-delay="1">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h3>Summon the Ghost</h3>
+                        <p>Hit the analyze button. Ghost Writer reads your text, detects genre and tone, extracts
+                            characters, and generates three unique paths.</p>
+                    </div>
+                </div>
+                <div class="step anim-fade" data-anim="fade-left" data-delay="2">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h3>Explore Directions</h3>
+                        <p>Browse the three narrative paths. Click any one to see an expanded preview of how the story
+                            could unfold from that point.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Editor Section ─── -->
+    <section class="section" id="editor">
+        <div class="app">
+
+            <div class="editor-header anim-fade" data-anim="fade-up">
+                <h2 class="section-title">Try It Now</h2>
+                <p class="editor-subtitle">Write or upload your story below and summon the ghost.</p>
+            </div>
+
+            <!-- File Upload -->
+            <div class="upload-section anim-fade" data-anim="fade-up" data-delay="1">
+                <label for="fileUpload" class="upload-area" id="uploadArea">
+                    <span class="upload-icon">📄</span>
+                    <span class="upload-text">Upload story file (.pdf or .txt)</span>
+                    <span class="upload-sub" id="uploadStatus">Drag & drop or click to browse</span>
+                    <input type="file" id="fileUpload" accept=".pdf,.txt" hidden>
+                </label>
+            </div>
+
+            <!-- Context Fields (collapsible) -->
+            <details class="advanced-toggle">
+                <summary class="advanced-label">⚙️ Advanced Context (optional)</summary>
+                <div class="context-row">
+                    <div class="context-card">
+                        <div class="card-label">📜 Full Context</div>
+                        <textarea id="fullContext" placeholder="Paste the full story so far (optional)..."
+                            rows="3"></textarea>
+                    </div>
+                    <div class="context-card">
+                        <div class="card-label">🧠 Short Memory</div>
+                        <textarea id="shortMemory" placeholder="Brief summary of earlier events (optional)..."
+                            rows="3"></textarea>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Main Editor -->
+            <div class="card anim-fade" data-anim="fade-up" data-delay="2">
+                <div class="card-header">
+                    <div class="card-label">✍️ Story</div>
+                    <div class="stats">
+                        <span>Words <b id="wordCount">0</b></span>
+                        <span>Chars <b id="charCount">0</b></span>
+                    </div>
+                </div>
+                <textarea id="storyEditor" class="editor-area"
+                    placeholder="Begin writing your story here..."></textarea>
+            </div>
+
+            <!-- Analyze Button -->
+            <button id="btnAnalyze" class="analyze-btn">
+                <span class="icon">👻</span>
+                <span id="btnLabel">Summon Ghost</span>
+            </button>
+
+            <!-- Loading -->
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>The ghost is reading your story...</p>
+            </div>
+
+            <!-- Results -->
+            <div id="results" class="results">
+                <div id="badges" class="badges"></div>
+                <div id="entities" class="entities"></div>
+                <div id="bridge" class="bridge"></div>
+                <div id="directions"></div>
+            </div>
+
+            <!-- Path Preview Modal -->
+            <div id="previewOverlay" class="preview-overlay">
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <span class="preview-title" id="previewTitle"></span>
+                        <button class="preview-close" id="previewClose">&times;</button>
+                    </div>
+                    <div class="preview-body" id="previewBody">
+                        <div class="spinner"></div>
+                        <p>Generating path preview...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span>👻</span> Ghost Writer
+            </div>
+            <div class="footer-links">
+                <a href="#hero">Home</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#editor">Editor</a>
+            </div>
+            <div class="footer-contact">
+                <a href="mailto:chatrapathireddythigulla@gmail.com">📧 chatrapathireddythigulla@gmail.com</a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 Ghost Writer &bull; FSAD Project &bull; Powered by Google Gemini AI
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <span id="toastMsg"></span>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+
+</html>
