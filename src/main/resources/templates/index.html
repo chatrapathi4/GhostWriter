@@ -10,6 +10,7 @@
     <meta name="author" content="Ghost Writer">
     <title>Ghost Writer — AI Narrative Shadow</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='56' font-size='56'>👻</text></svg>">
 </head>
@@ -26,9 +27,31 @@
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How It Works</a>
+                <a href="/stories">Stories</a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <span class="theme-icon" id="themeIcon">☀️</span>
                 </button>
+                <a href="/oauth2/authorization/github" class="nav-login-btn" id="loginBtn">
+                    🔑 Login with GitHub
+                </a>
+                <div class="nav-user-menu" id="userMenu" style="display:none">
+                    <button class="nav-avatar-btn" id="avatarBtn">
+                        <img id="userAvatar" src="" alt="avatar">
+                    </button>
+                    <div class="nav-dropdown" id="navDropdown">
+                        <div class="nav-dropdown-header">
+                            <div class="nav-dropdown-name" id="dropdownName">User</div>
+                            <div class="nav-dropdown-sub" id="dropdownSub">GitHub</div>
+                        </div>
+                        <div class="nav-dropdown-items">
+                            <a href="/dashboard" class="nav-dropdown-item"><span class="dd-icon">📊</span> Dashboard</a>
+                            <a href="/stories" class="nav-dropdown-item"><span class="dd-icon">📚</span> Stories</a>
+                            <div class="nav-dropdown-divider"></div>
+                            <a href="/logout" class="nav-dropdown-item logout"><span class="dd-icon">🚪</span>
+                                Logout</a>
+                        </div>
+                    </div>
+                </div>
                 <a href="#editor" class="nav-cta">Start Writing</a>
             </div>
         </div>
@@ -261,6 +284,7 @@
     </div>
 
     <script src="/js/app.js"></script>
+    <script src="/js/auth.js"></script>
 </body>
 
 </html>

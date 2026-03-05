@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Ghost Writer Dashboard — Manage your stories, drafts, and published works.">
+    <title>Dashboard — Ghost Writer</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='56' font-size='56'>👻</text></svg>">
+</head>
+
+<body>
+
+    <!-- ─── Navbar ─── -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">
+                <span class="nav-logo">👻</span>
+                <span class="nav-name">Ghost Writer</span>
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/stories">Stories</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon" id="themeIcon">☀️</span>
+                </button>
+                <a href="/oauth2/authorization/github" class="nav-login-btn" id="loginBtn" style="display:none">
+                    🔑 Login with GitHub
+                </a>
+                <div class="nav-user-menu" id="userMenu" style="display:none">
+                    <button class="nav-avatar-btn" id="avatarBtn">
+                        <img id="userAvatar" src="" alt="avatar">
+                    </button>
+                    <div class="nav-dropdown" id="navDropdown">
+                        <div class="nav-dropdown-header">
+                            <div class="nav-dropdown-name" id="dropdownName">User</div>
+                            <div class="nav-dropdown-sub" id="dropdownSub">GitHub</div>
+                        </div>
+                        <div class="nav-dropdown-items">
+                            <a href="/dashboard" class="nav-dropdown-item"><span class="dd-icon">📊</span> Dashboard</a>
+                            <a href="/stories" class="nav-dropdown-item"><span class="dd-icon">📚</span> Stories</a>
+                            <div class="nav-dropdown-divider"></div>
+                            <a href="/logout" class="nav-dropdown-item logout"><span class="dd-icon">🚪</span>
+                                Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ─── Dashboard Content ─── -->
+    <div class="page-container">
+        <div class="page-header"
+            style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px">
+            <div>
+                <h1 class="page-title">📊 Dashboard</h1>
+                <p class="page-subtitle">Manage your stories, drafts, and published works.</p>
+            </div>
+            <button class="create-story-btn" id="createStoryBtn">
+                <span>✏️</span> Create New Story
+            </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="all">All Stories</button>
+            <button class="tab-btn" data-tab="drafts">Drafts</button>
+            <button class="tab-btn" data-tab="published">Published</button>
+        </div>
+
+        <!-- Stories Grid -->
+        <div class="stories-grid" id="storiesGrid">
+            <div class="empty-state">
+                <div class="spinner"></div>
+                <div class="empty-state-text">Loading stories...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── Create/Edit Story Modal ─── -->
+    <div class="modal-overlay" id="storyModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span class="modal-title" id="modalTitle">Create New Story</span>
+                <button class="modal-close" id="modalCloseBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-input" id="storyTitle" placeholder="Enter story title...">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Genre</label>
+                        <input type="text" class="form-input" id="storyGenre" placeholder="e.g. Fantasy, Sci-Fi...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tone</label>
+                        <input type="text" class="form-input" id="storyTone" placeholder="e.g. Dark, Humorous...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Content</label>
+                    <textarea class="form-textarea" id="storyContent" placeholder="Write your story here..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="saveDraftBtn">Save as Draft</button>
+                <button class="modal-btn modal-btn-success" id="publishStoryBtn">Publish</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <span id="toastMsg"></span>
+    </div>
+
+    <script>
+        // Theme toggle (shared)
+        (function () {
+            var themeToggle = document.getElementById('themeToggle');
+            var themeIcon = document.getElementById('themeIcon');
+            var html = document.documentElement;
+            var savedTheme = localStorage.getItem('gw-theme') || 'dark';
+            html.setAttribute('data-theme', savedTheme);
+            themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            themeToggle.addEventListener('click', function () {
+                var current = html.getAttribute('data-theme');
+                var next = current === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', next);
+                themeIcon.textContent = next === 'dark' ? '☀️' : '🌙';
+                localStorage.setItem('gw-theme', next);
+            });
+        })();
+    </script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.ghostwriter:ghost-writer >--------------------
+[INFO] Building Ghost Writer 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ ghost-writer ---
+[INFO] Deleting E:\sem 4\FSAD\writer\target
+[INFO] 
+[INFO] >>> spring-boot:3.2.3:run (default-cli) > test-compile @ ghost-writer >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ ghost-writer ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 11 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ ghost-writer ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 19 source files with javac [debug release 17] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ ghost-writer ---
+[INFO] skip non existing resourceDirectory E:\sem 4\FSAD\writer\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ ghost-writer ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] <<< spring-boot:3.2.3:run (default-cli) < test-compile @ ghost-writer <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.3:run (default-cli) @ ghost-writer ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2026-03-05T21:11:34.833+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] com.ghostwriter.GhostWriterApplication   : Starting GhostWriterApplication using Java 17.0.17 with PID 24324 (E:\sem 4\FSAD\writer\target\classes started by Chatrapathi in E:\sem 4\FSAD\writer)
+2026-03-05T21:11:34.833+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] com.ghostwriter.GhostWriterApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-03-05T21:11:34.865+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-03-05T21:11:34.865+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-03-05T21:11:35.193+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2026-03-05T21:11:35.219+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 2 MongoDB repository interfaces.
+2026-03-05T21:11:35.519+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-05T21:11:35.534+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-05T21:11:35.534+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-03-05T21:11:35.557+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-05T21:11:35.557+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 692 ms
+2026-03-05T21:11:35.875+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] org.mongodb.driver.client                : MongoClient with metadata {"application": {"name": "ghostwriter"}, "driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "4.11.1"}, "os": {"type": "Windows", "name": "Windows 11", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Eclipse Adoptium/17.0.17+10"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=MongoCredential{mechanism=null, userName='wwwhoney80_db_user', source='admin', password=<hidden>, mechanismProperties=<hidden>}, transportSettings=null, streamFactoryFactory=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@19c6432c, com.mongodb.Jep395RecordCodecProvider@77a86233, com.mongodb.KotlinCodecProvider@4335ca40]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[127.0.0.1:27017], srvHost=ghostwriter.ze903ta.mongodb.net, srvServiceName=mongodb, mode=MULTIPLE, requiredClusterType=REPLICA_SET, requiredReplicaSetName='atlas-zf3lhp-shard-0', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='15 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=true, invalidHostNameAllowed=false, context=null}, applicationName='ghostwriter', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null}
+2026-03-05T21:11:35.942+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-03-05T21:11:36.057+05:30  INFO 24324 --- [ghost-writer] [3ta.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server ac-5qygnr5-shard-00-02.ze903ta.mongodb.net:27017 to client view of cluster
+2026-03-05T21:11:36.076+05:30  INFO 24324 --- [ghost-writer] [3ta.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server ac-5qygnr5-shard-00-01.ze903ta.mongodb.net:27017 to client view of cluster
+2026-03-05T21:11:36.077+05:30  INFO 24324 --- [ghost-writer] [3ta.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server ac-5qygnr5-shard-00-00.ze903ta.mongodb.net:27017 to client view of cluster
+2026-03-05T21:11:36.201+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-03-05T21:11:36.313+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6e8fea6e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@729158c5, org.springframework.security.web.context.SecurityContextHolderFilter@43f6daf, org.springframework.security.web.header.HeaderWriterFilter@99c188c, org.springframework.web.filter.CorsFilter@6d465709, org.springframework.security.web.authentication.logout.LogoutFilter@3e4190ed, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@7a9141f4, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@5ca80547, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@589a4fea, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@4631aac7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@60afd2d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7c03c71f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@57fcf4f5, org.springframework.security.web.access.ExceptionTranslationFilter@3e793a4, org.springframework.security.web.access.intercept.AuthorizationFilter@6fee1f7b]
+2026-03-05T21:11:36.436+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-03-05T21:11:36.441+05:30  INFO 24324 --- [ghost-writer] [  restartedMain] com.ghostwriter.GhostWriterApplication   : Started GhostWriterApplication in 1.806 seconds (process running for 2.03)
+2026-03-05T21:11:36.568+05:30  INFO 24324 --- [ghost-writer] [ngodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-5qygnr5-shard-00-01.ze903ta.mongodb.net:27017, type=REPLICA_SET_PRIMARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=25, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=169395500, setName='atlas-zf3lhp-shard-0', canonicalAddress=ac-5qygnr5-shard-00-01.ze903ta.mongodb.net:27017, hosts=[ac-5qygnr5-shard-00-00.ze903ta.mongodb.net:27017, ac-5qygnr5-shard-00-01.ze903ta.mongodb.net:27017, ac-5qygnr5-shard-00-02.ze903ta.mongodb.net:27017], passives=[], arbiters=[], primary='ac-5qygnr5-shard-00-01.ze903ta.mongodb.net:27017', tagSet=TagSet{[Tag{name='availabilityZone', value='aps1-az3'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='AP_SOUTH_1'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=7fffffff000000000000010a, setVersion=206, topologyVersion=TopologyVersion{processId=699f5b753cf073f78e6a372b, counter=6}, lastWriteDate=Thu Mar 05 21:11:36 IST 2026, lastUpdateTimeNanos=1380547881408000}
+2026-03-05T21:11:36.568+05:30  INFO 24324 --- [ghost-writer] [ngodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-5qygnr5-shard-00-00.ze903ta.mongodb.net:27017, type=REPLICA_SET_SECONDARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=25, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=175369800, setName='atlas-zf3lhp-shard-0', canonicalAddress=ac-5qygnr5-shard-00-00.ze903ta.mongodb.net:27017, hosts=[ac-5qygnr5-shard-00-00.ze903ta.mongodb.net:27017, ac-5qygnr5-shard-00-01.ze903ta.mongodb.net:27017, ac-5qygnr5-shard-00-02.ze903ta.mongodb.net:27017], passives=[], arbiters=[], primary='ac-5qygnr5-shard-00-01.ze903ta.mongodb.net:27017', tagSet=TagSet{[Tag{name='availabilityZone', value='aps1-az1'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='AP_SOUTH_1'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=null, setVersion=206, topologyVersion=TopologyVersion{processId=699f56eff96d135e51ea05fc, counter=4}, lastWriteDate=Thu Mar 05 21:11:36 IST 2026, lastUpdateTimeNanos=1380547881408200}
+2026-03-05T21:11:36.568+05:30  INFO 24324 --- [ghost-writer] [ngodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-5qygnr5-shard-00-02.ze903ta.mongodb.net:27017, type=REPLICA_SET_SECONDARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=25, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=169384300, setName='atlas-zf3lhp-shard-0', canonicalAddress=ac-5qygnr5-shard-00-02.ze903ta.mongodb.net:27017, hosts=[ac-5qygnr5-shard-00-00.ze903ta.mongodb.net:27017, ac-5qygnr5-shard-00-01.ze903ta.mongodb.net:27017, ac-5qygnr5-shard-00-02.ze903ta.mongodb.net:27017], passives=[], arbiters=[], primary='ac-5qygnr5-shard-00-01.ze903ta.mongodb.net:27017', tagSet=TagSet{[Tag{name='availabilityZone', value='aps1-az2'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='AP_SOUTH_1'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=null, setVersion=206, topologyVersion=TopologyVersion{processId=699f5dea457cf6bac79cbe1c, counter=3}, lastWriteDate=Thu Mar 05 21:11:36 IST 2026, lastUpdateTimeNanos=1380547881408000}
+2026-03-05T21:11:36.569+05:30  INFO 24324 --- [ghost-writer] [ngodb.net:27017] org.mongodb.driver.cluster               : Discovered replica set primary ac-5qygnr5-shard-00-01.ze903ta.mongodb.net:27017 with max election id 7fffffff000000000000010a and max set version 206
+2026-03-05T21:14:59.701+05:30  INFO 24324 --- [ghost-writer] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-05T21:14:59.701+05:30  INFO 24324 --- [ghost-writer] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-05T21:14:59.701+05:30  INFO 24324 --- [ghost-writer] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-03-05T21:34:16.702+05:30  INFO 24324 --- [ghost-writer] [nio-8080-exec-2] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [g_state={"i_l":0,"i_ll":1761980176338,"i_b":"h4b/RAa7nVYS8f3d/yzqx3aTmjahS6Ur1c3YcP439AU"};] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  38:46 min
+[INFO] Finished at: 2026-03-05T21:50:17+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.3:run (default-cli) on project ghost-writer: Process terminated with exit code: -1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
