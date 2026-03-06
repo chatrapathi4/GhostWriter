@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Ghost Writer Stories Feed — Discover visual stories from the community.">
+    <title>Stories Feed — Ghost Writer</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/feed.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='56' font-size='56'>👻</text></svg>">
+</head>
+
+<body>
+
+    <!-- ─── Navbar ─── -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">
+                <span class="nav-logo">👻</span>
+                <span class="nav-name">Ghost Writer</span>
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/feed" class="active">Stories</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon" id="themeIcon">☀️</span>
+                </button>
+                <a href="/oauth2/authorization/github" class="nav-login-btn" id="loginBtn">
+                    🔑 Login with GitHub
+                </a>
+                <div class="nav-user-menu" id="userMenu" style="display:none">
+                    <button class="nav-avatar-btn" id="avatarBtn">
+                        <img id="userAvatar" src="" alt="avatar">
+                    </button>
+                    <div class="nav-dropdown" id="navDropdown">
+                        <div class="nav-dropdown-header">
+                            <div class="nav-dropdown-name" id="dropdownName">User</div>
+                            <div class="nav-dropdown-sub" id="dropdownSub">GitHub</div>
+                        </div>
+                        <div class="nav-dropdown-items">
+                            <a href="/dashboard" class="nav-dropdown-item"><span class="dd-icon">📊</span> Dashboard</a>
+                            <a href="/feed" class="nav-dropdown-item"><span class="dd-icon">📚</span> Stories</a>
+                            <a href="/write" class="nav-dropdown-item"><span class="dd-icon">✏️</span> Write</a>
+                            <div class="nav-dropdown-divider"></div>
+                            <a href="/logout" class="nav-dropdown-item logout"><span class="dd-icon">🚪</span>
+                                Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ─── Feed Content ─── -->
+    <div class="feed-container">
+        <div class="feed-header">
+            <h1 class="page-title">📚 Discover Stories</h1>
+            <p class="page-subtitle">Explore stories from writers around the world.</p>
+        </div>
+
+        <div class="feed-grid" id="feedGrid">
+            <div class="empty-state">
+                <div class="spinner"></div>
+                <div class="empty-state-text">Loading stories...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── Footer ─── -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span>👻</span> Ghost Writer
+            </div>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/feed">Stories</a>
+                <a href="/#editor">Editor</a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 Ghost Writer &bull; FSAD Project &bull; Powered by Google Gemini AI
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            var themeToggle = document.getElementById('themeToggle');
+            var themeIcon = document.getElementById('themeIcon');
+            var html = document.documentElement;
+            var savedTheme = localStorage.getItem('gw-theme') || 'dark';
+            html.setAttribute('data-theme', savedTheme);
+            themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            themeToggle.addEventListener('click', function () {
+                var current = html.getAttribute('data-theme');
+                var next = current === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', next);
+                themeIcon.textContent = next === 'dark' ? '☀️' : '🌙';
+                localStorage.setItem('gw-theme', next);
+            });
+        })();
+    </script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/feed.js"></script>
+</body>
+
+</html>

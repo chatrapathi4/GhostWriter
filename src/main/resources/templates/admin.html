@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Ghost Writer Admin — Manage stories, moderate content, and oversee the platform.">
+    <title>Admin Panel — Ghost Writer</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='56' font-size='56'>👻</text></svg>">
+</head>
+
+<body>
+
+    <!-- ─── Navbar ─── -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">
+                <span class="nav-logo">👻</span>
+                <span class="nav-name">Ghost Writer</span>
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/feed">Stories</a>
+                <a href="/admin" class="active">Admin</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon" id="themeIcon">☀️</span>
+                </button>
+                <a href="/oauth2/authorization/github" class="nav-login-btn" id="loginBtn" style="display:none">
+                    🔑 Login with GitHub
+                </a>
+                <div class="nav-user-menu" id="userMenu" style="display:none">
+                    <button class="nav-avatar-btn" id="avatarBtn">
+                        <img id="userAvatar" src="" alt="avatar">
+                    </button>
+                    <div class="nav-dropdown" id="navDropdown">
+                        <div class="nav-dropdown-header">
+                            <div class="nav-dropdown-name" id="dropdownName">User</div>
+                            <div class="nav-dropdown-sub" id="dropdownSub">GitHub</div>
+                        </div>
+                        <div class="nav-dropdown-items">
+                            <a href="/dashboard" class="nav-dropdown-item"><span class="dd-icon">📊</span> Dashboard</a>
+                            <a href="/feed" class="nav-dropdown-item"><span class="dd-icon">📚</span> Stories</a>
+                            <a href="/write" class="nav-dropdown-item"><span class="dd-icon">✏️</span> Write</a>
+                            <a href="/admin" class="nav-dropdown-item"><span class="dd-icon">🛡️</span> Admin</a>
+                            <div class="nav-dropdown-divider"></div>
+                            <a href="/logout" class="nav-dropdown-item logout"><span class="dd-icon">🚪</span>
+                                Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ─── Admin Content ─── -->
+    <div class="page-container">
+        <div class="page-header">
+            <h1 class="page-title">🛡️ Admin Panel</h1>
+            <p class="page-subtitle">Manage stories, moderate content, and oversee the platform.</p>
+        </div>
+
+        <!-- Access Denied Message -->
+        <div id="accessDenied" class="admin-access-denied" style="display:none">
+            <div class="empty-state">
+                <div class="empty-state-icon">🚫</div>
+                <div class="empty-state-title">Access Denied</div>
+                <div class="empty-state-text">You do not have admin privileges. Please log in with an admin account.
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" style="display:none">
+            <!-- Stats -->
+            <div class="admin-stats" id="adminStats">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number" id="pendingCount">0</div>
+                    <div class="admin-stat-label">Pending Review</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number" id="publishedCount">0</div>
+                    <div class="admin-stat-label">Published</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number" id="rejectedCount">0</div>
+                    <div class="admin-stat-label">Rejected</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="pending">⏳ Pending</button>
+                <button class="tab-btn" data-tab="published">✅ Published</button>
+                <button class="tab-btn" data-tab="rejected">❌ Rejected</button>
+            </div>
+
+            <!-- Stories List -->
+            <div class="admin-stories-list" id="adminStoriesList">
+                <div class="empty-state">
+                    <div class="spinner"></div>
+                    <div class="empty-state-text">Loading stories...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reject Modal -->
+    <div class="modal-overlay" id="rejectModal">
+        <div class="modal-card" style="max-width:480px">
+            <div class="modal-header">
+                <span class="modal-title">Reject Story</span>
+                <button class="modal-close" id="rejectModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Rejection Reason</label>
+                    <textarea class="form-textarea" id="rejectReason"
+                        placeholder="Explain why this story is being rejected..." style="min-height:120px"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="rejectCancelBtn">Cancel</button>
+                <button class="modal-btn modal-btn-danger" id="rejectConfirmBtn">Reject Story</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <span id="toastMsg"></span>
+    </div>
+
+    <script>
+        // Theme toggle
+        (function () {
+            var themeToggle = document.getElementById('themeToggle');
+            var themeIcon = document.getElementById('themeIcon');
+            var html = document.documentElement;
+            var savedTheme = localStorage.getItem('gw-theme') || 'dark';
+            html.setAttribute('data-theme', savedTheme);
+            themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            themeToggle.addEventListener('click', function () {
+                var current = html.getAttribute('data-theme');
+                var next = current === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', next);
+                themeIcon.textContent = next === 'dark' ? '☀️' : '🌙';
+                localStorage.setItem('gw-theme', next);
+            });
+        })();
+    </script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+
+</html>

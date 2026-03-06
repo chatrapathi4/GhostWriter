@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Ghost Writer — Create stories with chapters.">
+    <title>Write Story — Ghost Writer</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/write.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='56' font-size='56'>👻</text></svg>">
+</head>
+
+<body>
+
+    <!-- ─── Navbar ─── -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">
+                <span class="nav-logo">👻</span>
+                <span class="nav-name">Ghost Writer</span>
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/feed">Stories</a>
+                <a href="/write" class="active">Write</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon" id="themeIcon">☀️</span>
+                </button>
+                <a href="/oauth2/authorization/github" class="nav-login-btn" id="loginBtn" style="display:none">
+                    🔑 Login with GitHub
+                </a>
+                <div class="nav-user-menu" id="userMenu" style="display:none">
+                    <button class="nav-avatar-btn" id="avatarBtn">
+                        <img id="userAvatar" src="" alt="avatar">
+                    </button>
+                    <div class="nav-dropdown" id="navDropdown">
+                        <div class="nav-dropdown-header">
+                            <div class="nav-dropdown-name" id="dropdownName">User</div>
+                            <div class="nav-dropdown-sub" id="dropdownSub">GitHub</div>
+                        </div>
+                        <div class="nav-dropdown-items">
+                            <a href="/dashboard" class="nav-dropdown-item"><span class="dd-icon">📊</span> Dashboard</a>
+                            <a href="/feed" class="nav-dropdown-item"><span class="dd-icon">📚</span> Stories</a>
+                            <a href="/write" class="nav-dropdown-item"><span class="dd-icon">✏️</span> Write</a>
+                            <div class="nav-dropdown-divider"></div>
+                            <a href="/logout" class="nav-dropdown-item logout"><span class="dd-icon">🚪</span>
+                                Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ─── Write Content ─── -->
+    <div class="page-container">
+        <div class="page-header"
+            style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px">
+            <div>
+                <h1 class="page-title" id="writePageTitle">✏️ Create New Story</h1>
+                <p class="page-subtitle">Write your story with chapters.</p>
+            </div>
+            <div class="write-actions-top">
+                <button class="create-story-btn" id="importTxtBtn" style="background:var(--purple)">
+                    <span>📄</span> Import TXT
+                </button>
+            </div>
+        </div>
+
+        <!-- Story Metadata -->
+        <div class="write-meta-section">
+            <div class="form-group">
+                <label class="form-label">Title</label>
+                <input type="text" class="form-input" id="writeTitle" placeholder="Enter story title...">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Genre</label>
+                    <input type="text" class="form-input" id="writeGenre" placeholder="e.g. Fantasy, Sci-Fi...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tone</label>
+                    <input type="text" class="form-input" id="writeTone" placeholder="e.g. Dark, Humorous...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Summary</label>
+                <textarea class="form-textarea" id="writeSummary" placeholder="Write a brief summary of your story..."
+                    style="min-height:100px"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Cover Image URL</label>
+                <input type="text" class="form-input" id="writeCoverImage" placeholder="https://example.com/image.jpg">
+            </div>
+        </div>
+
+        <!-- Chapters Section -->
+        <div class="write-chapters-section">
+            <div class="write-chapters-header">
+                <h2 class="write-chapters-title">📋 Chapters</h2>
+                <button class="add-chapter-btn" id="addChapterBtn">+ Add Chapter</button>
+            </div>
+            <div class="write-chapters-list" id="chaptersList">
+                <!-- Chapters will be rendered here -->
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="write-footer-actions">
+            <button class="modal-btn modal-btn-secondary" id="saveDraftBtn">💾 Save as Draft</button>
+            <button class="modal-btn modal-btn-success" id="publishBtn">🚀 Publish Story</button>
+        </div>
+    </div>
+
+    <!-- ─── Chapter Editor Modal ─── -->
+    <div class="modal-overlay" id="chapterEditorModal">
+        <div class="modal-card" style="max-width:700px">
+            <div class="modal-header">
+                <span class="modal-title" id="chapterEditorTitle">Edit Chapter</span>
+                <button class="modal-close" id="chapterEditorClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Chapter Title</label>
+                    <input type="text" class="form-input" id="chapterEditTitle" placeholder="Chapter title...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Content</label>
+                    <textarea class="form-textarea" id="chapterEditContent" placeholder="Write chapter content..."
+                        style="min-height:300px"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="chapterEditorCancel">Cancel</button>
+                <button class="modal-btn modal-btn-primary" id="chapterEditorSave">Save Chapter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── Import TXT Modal ─── -->
+    <div class="modal-overlay" id="importModal">
+        <div class="modal-card" style="max-width:500px">
+            <div class="modal-header">
+                <span class="modal-title">📄 Import TXT File</span>
+                <button class="modal-close" id="importModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Select File</label>
+                    <input type="file" class="form-input" id="importFile" accept=".txt" style="padding:10px">
+                </div>
+                <p style="font-size:13px;color:var(--text-tertiary);line-height:1.5">
+                    The system will automatically split your text into chapters by detecting "Chapter" markers.
+                    If none are found, it will split every 1000-1500 words. You can edit chapter titles afterward.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="importCancel">Cancel</button>
+                <button class="modal-btn modal-btn-primary" id="importConfirm">Import & Split</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <span id="toastMsg"></span>
+    </div>
+
+    <script>
+        (function () {
+            var themeToggle = document.getElementById('themeToggle');
+            var themeIcon = document.getElementById('themeIcon');
+            var html = document.documentElement;
+            var savedTheme = localStorage.getItem('gw-theme') || 'dark';
+            html.setAttribute('data-theme', savedTheme);
+            themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            themeToggle.addEventListener('click', function () {
+                var current = html.getAttribute('data-theme');
+                var next = current === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', next);
+                themeIcon.textContent = next === 'dark' ? '☀️' : '🌙';
+                localStorage.setItem('gw-theme', next);
+            });
+        })();
+    </script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/write.js"></script>
+</body>
+
+</html>

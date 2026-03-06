@@ -16,9 +16,14 @@ public class Story {
     private String content;
     private String genre;
     private String tone;
-    private String status; // "draft" or "published"
+    private String status; // "draft", "pending_review", "published", "rejected"
     private Instant createdAt;
     private Instant updatedAt;
+    private String summary;
+    private String coverImage;
+    private String rejectionReason;
+    private int viewCount;
+    private int likeCount;
 
     public Story() {
     }
@@ -114,5 +119,45 @@ public class Story {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+
+    public void setRejectionReason(String rejectionReason) {
+        this.rejectionReason = rejectionReason;
+    }
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 }
