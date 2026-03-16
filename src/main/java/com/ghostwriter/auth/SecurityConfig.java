@@ -63,7 +63,6 @@ public class SecurityConfig {
                 }
 
                 if (registrations.isEmpty()) {
-                        // Placeholder so Spring doesn't fail — OAuth2 login won't be enabled
                         registrations.add(
                                         ClientRegistration.withRegistrationId("none")
                                                         .clientId("none")
@@ -84,14 +83,17 @@ public class SecurityConfig {
                                 .csrf(csrf -> csrf.disable())
                                 .authorizeHttpRequests(auth -> auth
                                                 // ─── Public: existing pages & APIs ───
-                                                .requestMatchers("/", "/css/**", "/js/**", "/images/**").permitAll()
+                                                .requestMatchers("/", "/css/**", "/js/**", "/images/**", "/uploads/**")
+                                                .permitAll()
                                                 .requestMatchers("/api/analyze", "/api/expand", "/api/upload")
                                                 .permitAll()
                                                 .requestMatchers("/api/auth/**").permitAll()
-                                                .requestMatchers("/stories", "/story/**").permitAll()
+                                                .requestMatchers("/stories", "/story/**", "/read/**").permitAll()
                                                 .requestMatchers(HttpMethod.GET, "/api/stories/published",
                                                                 "/api/stories/*")
                                                 .permitAll()
+                                                // ─── Public: chapter reading API ───
+                                                .requestMatchers(HttpMethod.GET, "/api/chapters/**").permitAll()
                                                 // ─── Authenticated: dashboard & story management ───
                                                 .requestMatchers("/dashboard").authenticated()
                                                 .requestMatchers("/api/stories/**").authenticated()
@@ -102,7 +104,6 @@ public class SecurityConfig {
                                                 .invalidateHttpSession(true)
                                                 .deleteCookies("JSESSIONID"));
 
-                // Only enable OAuth2 login if GitHub credentials are configured
                 if (isOAuthConfigured()) {
                         http.oauth2Login(oauth2 -> oauth2
                                         .userInfoEndpoint(userInfo -> userInfo

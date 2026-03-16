@@ -16,4 +16,9 @@ public class WritePageController {
     public String editStoryPage(@PathVariable String id) {
         return "write";
     }
+
+    @GetMapping("/edit/{id}")
+    public String editStoryDashboardPage(@PathVariable String id) {
+        return "story-edit";
+    }
 }

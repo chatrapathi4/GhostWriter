@@ -39,9 +39,63 @@
             document.getElementById('writeSummary').value = story.summary || '';
             document.getElementById('writeCoverImage').value = story.coverImage || '';
 
+            // Show cover image preview if exists
+            if (story.coverImage) {
+                var preview = document.getElementById('coverPreview');
+                var previewImg = document.getElementById('coverPreviewImg');
+                if (preview && previewImg) {
+                    previewImg.src = story.coverImage;
+                    preview.style.display = 'block';
+                }
+            }
+
             renderChapters();
         }).catch(function () {
             showToast('Failed to load story');
+        });
+    }
+
+    // ═══════════════════════════════════════
+    // Cover Image Upload
+    // ═══════════════════════════════════════
+    var coverFileInput = document.getElementById('writeCoverFile');
+    if (coverFileInput) {
+        coverFileInput.addEventListener('change', function () {
+            var file = coverFileInput.files[0];
+            if (!file) return;
+
+            var validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            if (validTypes.indexOf(file.type) === -1) {
+                showToast('Please select a JPG, PNG, or WebP image');
+                coverFileInput.value = '';
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/api/upload/cover', {
+                method: 'POST',
+                body: formData
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (data.error) {
+                        showToast(data.error);
+                        return;
+                    }
+                    document.getElementById('writeCoverImage').value = data.url;
+                    var preview = document.getElementById('coverPreview');
+                    var previewImg = document.getElementById('coverPreviewImg');
+                    if (preview && previewImg) {
+                        previewImg.src = data.url;
+                        preview.style.display = 'block';
+                    }
+                    showToast('Cover image uploaded');
+                })
+                .catch(function () {
+                    showToast('Failed to upload cover image');
+                });
         });
     }
 
@@ -175,7 +229,6 @@
             var reader = new FileReader();
             reader.onload = function (e) {
                 var text = e.target.result;
-                // Preview split via API
                 fetch('/api/import/txt/preview', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -201,14 +254,14 @@
     }
 
     // ═══════════════════════════════════════
-    // Save / Publish
+    // Save / Send to Review
     // ═══════════════════════════════════════
     document.getElementById('saveDraftBtn').addEventListener('click', function () {
         saveStory('draft');
     });
 
     document.getElementById('publishBtn').addEventListener('click', function () {
-        saveStory('publish');
+        saveStory('review');
     });
 
     function saveStory(action) {
@@ -302,8 +355,8 @@
             .then(function (sid) {
                 if (!sid) return;
 
-                if (action === 'publish') {
-                    // Submit for moderation
+                if (action === 'review') {
+                    // Submit for review via moderation
                     return fetch('/api/moderation/publish/' + sid, { method: 'POST' })
                         .then(function (r) { return r.json(); })
                         .then(function (result) {
@@ -312,7 +365,7 @@
                             } else if (result.status === 'rejected') {
                                 showToast('Story rejected: ' + (result.rejectionReason || 'Content flagged'));
                             } else {
-                                showToast('Story saved and submitted for review');
+                                showToast('Story sent for review!');
                             }
                         });
                 } else {
@@ -320,7 +373,7 @@
                 }
             })
             .catch(function (err) {
-                if (err && err.message) return; // Already handled
+                if (err && err.message) return;
                 showToast('Failed to save story');
             });
     }

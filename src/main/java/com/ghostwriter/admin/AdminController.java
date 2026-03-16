@@ -14,17 +14,20 @@ import java.util.Map;
 public class AdminController {
 
     private final AdminService adminService;
+    private final AdminUserService adminUserService;
 
     @Value("${admin.github.id:}")
     private String adminGithubId;
 
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, AdminUserService adminUserService) {
         this.adminService = adminService;
+        this.adminUserService = adminUserService;
     }
 
-    /**
-     * Get pending stories.
-     */
+    // ═══════════════════════════════════════
+    // Story Management Endpoints
+    // ═══════════════════════════════════════
+
     @GetMapping("/stories/pending")
     public ResponseEntity<?> getPendingStories(@AuthenticationPrincipal OAuth2User principal) {
         if (!isAdmin(principal)) {
@@ -33,9 +36,6 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getPendingStories());
     }
 
-    /**
-     * Get published stories.
-     */
     @GetMapping("/stories/published")
     public ResponseEntity<?> getPublishedStories(@AuthenticationPrincipal OAuth2User principal) {
         if (!isAdmin(principal)) {
@@ -44,9 +44,6 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getPublishedStories());
     }
 
-    /**
-     * Get rejected stories.
-     */
     @GetMapping("/stories/rejected")
     public ResponseEntity<?> getRejectedStories(@AuthenticationPrincipal OAuth2User principal) {
         if (!isAdmin(principal)) {
@@ -55,9 +52,6 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getRejectedStories());
     }
 
-    /**
-     * Approve a story.
-     */
     @PostMapping("/stories/{id}/approve")
     public ResponseEntity<?> approveStory(@PathVariable String id,
             @AuthenticationPrincipal OAuth2User principal) {
@@ -72,9 +66,6 @@ public class AdminController {
         }
     }
 
-    /**
-     * Reject a story with reason.
-     */
     @PostMapping("/stories/{id}/reject")
     public ResponseEntity<?> rejectStory(@PathVariable String id,
             @RequestBody Map<String, String> body,
@@ -91,9 +82,6 @@ public class AdminController {
         }
     }
 
-    /**
-     * Delete any story (admin privilege).
-     */
     @DeleteMapping("/stories/{id}")
     public ResponseEntity<?> deleteStory(@PathVariable String id,
             @AuthenticationPrincipal OAuth2User principal) {
@@ -107,6 +95,45 @@ public class AdminController {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
+
+    // ═══════════════════════════════════════
+    // User Management Endpoints
+    // ═══════════════════════════════════════
+
+    @GetMapping("/users")
+    public ResponseEntity<?> getAllUsers(@AuthenticationPrincipal OAuth2User principal) {
+        if (!isAdmin(principal)) {
+            return ResponseEntity.status(403).body(Map.of("error", "Admin access required"));
+        }
+        return ResponseEntity.ok(adminUserService.getAllUsersWithStats());
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable String id,
+            @AuthenticationPrincipal OAuth2User principal) {
+        if (!isAdmin(principal)) {
+            return ResponseEntity.status(403).body(Map.of("error", "Admin access required"));
+        }
+        try {
+            adminUserService.deleteUser(id);
+            return ResponseEntity.ok(Map.of("message", "User deleted"));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/users/{id}/stories")
+    public ResponseEntity<?> getUserStories(@PathVariable String id,
+            @AuthenticationPrincipal OAuth2User principal) {
+        if (!isAdmin(principal)) {
+            return ResponseEntity.status(403).body(Map.of("error", "Admin access required"));
+        }
+        return ResponseEntity.ok(adminUserService.getUserStories(id));
+    }
+
+    // ═══════════════════════════════════════
+    // Helper
+    // ═══════════════════════════════════════
 
     private boolean isAdmin(OAuth2User principal) {
         if (principal == null || adminGithubId == null || adminGithubId.isBlank()) {

@@ -111,20 +111,10 @@
     // Chapter Reader
     // ═══════════════════════════════════════
     window._openChapter = function (index) {
-        currentChapterIndex = index;
         var ch = allChapters[index];
         if (!ch) return;
-
-        document.getElementById('chapterReaderTitle').textContent =
-            'Chapter ' + ch.chapterNumber + ': ' + (ch.title || 'Untitled');
-        document.getElementById('chapterReaderBody').textContent = ch.content || '';
-        document.getElementById('chapterNavInfo').textContent =
-            'Chapter ' + (index + 1) + ' of ' + allChapters.length;
-
-        document.getElementById('prevChapterBtn').style.display = index > 0 ? 'inline-block' : 'none';
-        document.getElementById('nextChapterBtn').style.display = index < allChapters.length - 1 ? 'inline-block' : 'none';
-
-        document.getElementById('chapterReader').classList.add('show');
+        // Navigate to dedicated reading page
+        window.location.href = '/read/' + storyId + '/' + ch.chapterNumber;
     };
 
     // Navigation

@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Ghost Writer Dashboard — Manage your stories, drafts, and published works.">
-    <title>Dashboard — Ghost Writer</title>
+    <meta name="description" content="Ghost Writer Admin — Manage users on the platform.">
+    <title>User Management — Ghost Writer</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/admin.css">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='56' font-size='56'>👻</text></svg>">
 </head>
@@ -24,6 +25,7 @@
             <div class="nav-links">
                 <a href="/">Home</a>
                 <a href="/feed">Stories</a>
+                <a href="/admin" class="active">Admin</a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <span class="theme-icon" id="themeIcon">☀️</span>
                 </button>
@@ -42,6 +44,7 @@
                         <div class="nav-dropdown-items">
                             <a href="/dashboard" class="nav-dropdown-item"><span class="dd-icon">📊</span> Dashboard</a>
                             <a href="/feed" class="nav-dropdown-item"><span class="dd-icon">📚</span> Stories</a>
+                            <a href="/admin" class="nav-dropdown-item"><span class="dd-icon">🛡️</span> Admin</a>
                             <div class="nav-dropdown-divider"></div>
                             <a href="/logout" class="nav-dropdown-item logout"><span class="dd-icon">🚪</span>
                                 Logout</a>
@@ -52,33 +55,67 @@
         </div>
     </nav>
 
-    <!-- ─── Dashboard Content ─── -->
+    <!-- ─── Admin Users Content ─── -->
     <div class="page-container">
-        <div class="page-header"
-            style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px">
+        <div class="page-header" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px">
             <div>
-                <h1 class="page-title">📊 Dashboard</h1>
-                <p class="page-subtitle">Manage your stories, drafts, and published works.</p>
+                <h1 class="page-title">👥 User Management</h1>
+                <p class="page-subtitle">View and manage all registered users.</p>
             </div>
-            <a href="/write" class="create-story-btn" id="createStoryBtn" style="text-decoration:none">
-                <span>✏️</span> Create New Story
-            </a>
+            <div style="display:flex;gap:10px">
+                <a href="/admin" class="create-story-btn" style="text-decoration:none;background:var(--purple)">
+                    <span>🛡️</span> Story Review
+                </a>
+            </div>
         </div>
 
-        <!-- Tabs -->
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="all">All Stories</button>
-            <button class="tab-btn" data-tab="drafts">Drafts</button>
-            <button class="tab-btn" data-tab="pending">Pending Review</button>
-            <button class="tab-btn" data-tab="published">Published</button>
-            <button class="tab-btn" data-tab="rejected">Rejected</button>
-        </div>
-
-        <!-- Stories Grid -->
-        <div class="stories-grid" id="storiesGrid">
+        <!-- Access Denied Message -->
+        <div id="accessDenied" class="admin-access-denied" style="display:none">
             <div class="empty-state">
-                <div class="spinner"></div>
-                <div class="empty-state-text">Loading stories...</div>
+                <div class="empty-state-icon">🚫</div>
+                <div class="empty-state-title">Access Denied</div>
+                <div class="empty-state-text">You do not have admin privileges. Please log in with an admin account.</div>
+            </div>
+        </div>
+
+        <!-- Users List -->
+        <div id="usersSection" style="display:none">
+            <div class="admin-stats" id="userStats">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number" id="totalUsers">0</div>
+                    <div class="admin-stat-label">Total Users</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number" id="totalStories">0</div>
+                    <div class="admin-stat-label">Total Stories</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-number" id="totalPublished">0</div>
+                    <div class="admin-stat-label">Published</div>
+                </div>
+            </div>
+
+            <div class="admin-stories-list" id="usersList">
+                <div class="empty-state">
+                    <div class="spinner"></div>
+                    <div class="empty-state-text">Loading users...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Stories Modal -->
+    <div class="modal-overlay" id="userStoriesModal">
+        <div class="modal-card" style="max-width:700px">
+            <div class="modal-header">
+                <span class="modal-title" id="userStoriesTitle">User Stories</span>
+                <button class="modal-close" id="userStoriesClose">&times;</button>
+            </div>
+            <div class="modal-body" id="userStoriesBody">
+                <div class="empty-state"><div class="spinner"></div></div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="userStoriesCloseBtn">Close</button>
             </div>
         </div>
     </div>
@@ -89,7 +126,6 @@
     </div>
 
     <script>
-        // Theme toggle (shared)
         (function () {
             var themeToggle = document.getElementById('themeToggle');
             var themeIcon = document.getElementById('themeIcon');
@@ -107,7 +143,7 @@
         })();
     </script>
     <script src="/js/auth.js"></script>
-    <script src="/js/dashboard.js"></script>
+    <script src="/js/admin-users.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,305 @@
+/* ═══════════════════════════════════════
+   Reader Mode Styles
+   ═══════════════════════════════════════ */
+
+/* ─── Toolbar ─── */
+.reader-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 24px;
+    background: rgba(18, 18, 24, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.3s ease;
+}
+
+.reader-back {
+    color: var(--accent, #a78bfa);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.reader-back:hover {
+    opacity: 0.8;
+}
+
+.reader-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.reader-select {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e0e0e0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.reader-select:hover,
+.reader-select:focus {
+    border-color: rgba(167, 139, 250, 0.5);
+}
+
+.reader-select option {
+    background: #1a1a2e;
+    color: #e0e0e0;
+}
+
+/* ─── Container ─── */
+.reader-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px 60px;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.reader-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    min-height: 50vh;
+    color: var(--text-secondary, #999);
+    font-size: 15px;
+}
+
+/* ─── Content ─── */
+.reader-chapter-info {
+    color: var(--accent, #a78bfa);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.reader-chapter-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 32px 0;
+    line-height: 1.3;
+}
+
+.reader-chapter-body {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* ─── Font families ─── */
+.reader-font-serif {
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.reader-font-sans-serif {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.reader-font-monospace {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Mono', monospace;
+}
+
+/* ─── Background themes ─── */
+.reader-bg-dark {
+    background-color: #0d0d14;
+    color: #d4d4d8;
+}
+
+.reader-bg-dark .reader-chapter-title {
+    color: #f0f0f0;
+}
+
+.reader-bg-dark .reader-toolbar {
+    background: rgba(18, 18, 24, 0.95);
+}
+
+.reader-bg-sepia {
+    background-color: #f4ecd8;
+    color: #3d3226;
+}
+
+.reader-bg-sepia .reader-chapter-title {
+    color: #2c1f12;
+}
+
+.reader-bg-sepia .reader-chapter-info {
+    color: #8b6914;
+}
+
+.reader-bg-sepia .reader-toolbar {
+    background: rgba(230, 218, 190, 0.95);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.reader-bg-sepia .reader-back,
+.reader-bg-sepia .reader-nav-btn {
+    color: #8b6914;
+}
+
+.reader-bg-sepia .reader-select {
+    background: rgba(0, 0, 0, 0.06);
+    color: #3d3226;
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.reader-bg-sepia .reader-select option {
+    background: #f4ecd8;
+    color: #3d3226;
+}
+
+.reader-bg-light {
+    background-color: #fafafa;
+    color: #2c2c2c;
+}
+
+.reader-bg-light .reader-chapter-title {
+    color: #111;
+}
+
+.reader-bg-light .reader-chapter-info {
+    color: #6d28d9;
+}
+
+.reader-bg-light .reader-toolbar {
+    background: rgba(250, 250, 250, 0.95);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+.reader-bg-light .reader-back,
+.reader-bg-light .reader-nav-btn {
+    color: #6d28d9;
+}
+
+.reader-bg-light .reader-select {
+    background: rgba(0, 0, 0, 0.04);
+    color: #2c2c2c;
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+.reader-bg-light .reader-select option {
+    background: #fafafa;
+    color: #2c2c2c;
+}
+
+/* ─── Next Chapter (Feature 7) ─── */
+.reader-next-chapter {
+    margin-top: 64px;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.reader-next-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent, #a78bfa), transparent);
+    margin: 0 auto 24px;
+}
+
+.reader-next-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent, #a78bfa);
+    margin-bottom: 16px;
+    opacity: 0.7;
+}
+
+.reader-next-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--accent, #a78bfa);
+    background: transparent;
+    color: var(--accent, #a78bfa);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: bounceArrow 2s ease-in-out infinite;
+}
+
+.reader-next-arrow:hover {
+    background: var(--accent, #a78bfa);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.reader-next-arrow .arrow-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+@keyframes bounceArrow {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+/* ─── Navigation ─── */
+.reader-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 48px;
+    padding: 24px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.reader-nav-btn {
+    color: var(--accent, #a78bfa);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background 0.2s, opacity 0.2s;
+}
+
+.reader-nav-btn:hover {
+    background: rgba(167, 139, 250, 0.1);
+}
+
+.reader-nav-info {
+    font-size: 13px;
+    color: var(--text-secondary, #888);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+    .reader-container {
+        padding: 70px 16px 40px;
+    }
+
+    .reader-chapter-title {
+        font-size: 1.5rem;
+    }
+
+    .reader-chapter-body {
+        font-size: 1.05rem;
+    }
+
+    .reader-toolbar {
+        padding: 8px 16px;
+    }
+}

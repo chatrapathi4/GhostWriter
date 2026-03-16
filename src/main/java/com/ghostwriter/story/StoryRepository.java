@@ -11,4 +11,8 @@ public interface StoryRepository extends MongoRepository<Story, String> {
     List<Story> findByStatusOrderByUpdatedAtDesc(String status);
 
     List<Story> findByUserIdAndStatusOrderByUpdatedAtDesc(String userId, String status);
+
+    long countByUserId(String userId);
+
+    long countByUserIdAndStatus(String userId, String status);
 }

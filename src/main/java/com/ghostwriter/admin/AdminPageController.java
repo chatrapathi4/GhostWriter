@@ -10,4 +10,14 @@ public class AdminPageController {
     public String adminPage() {
         return "admin";
     }
+
+    @GetMapping("/admin/users")
+    public String adminUsersPage() {
+        return "admin-users";
+    }
+
+    @GetMapping("/admin/review")
+    public String adminReviewPage() {
+        return "admin";
+    }
 }

@@ -3,7 +3,6 @@
 
     var currentTab = 'all';
     var allStories = [];
-    var editingStoryId = null;
 
     // ═══════════════════════════════════════
     // Load Stories
@@ -34,12 +33,18 @@
             filtered = allStories.filter(function (s) { return s.status === 'draft'; });
         } else if (currentTab === 'published') {
             filtered = allStories.filter(function (s) { return s.status === 'published'; });
+        } else if (currentTab === 'pending') {
+            filtered = allStories.filter(function (s) { return s.status === 'pending_review'; });
+        } else if (currentTab === 'rejected') {
+            filtered = allStories.filter(function (s) { return s.status === 'rejected'; });
         }
 
         if (filtered.length === 0) {
             var emptyMsg = currentTab === 'drafts' ? 'No drafts yet' :
                 currentTab === 'published' ? 'No published stories yet' :
-                    'No stories yet. Create your first one!';
+                    currentTab === 'pending' ? 'No stories pending review' :
+                        currentTab === 'rejected' ? 'No rejected stories' :
+                            'No stories yet. Create your first one!';
             container.innerHTML =
                 '<div class="empty-state">' +
                 '<div class="empty-state-icon">📝</div>' +
@@ -54,8 +59,25 @@
             var preview = (story.content || '').substring(0, 150);
             if ((story.content || '').length > 150) preview += '...';
             var date = story.updatedAt ? new Date(story.updatedAt).toLocaleDateString() : '';
-            var statusClass = story.status === 'published' ? 'status-published' : 'status-draft';
-            var statusLabel = story.status === 'published' ? 'Published' : 'Draft';
+
+            var statusClass, statusLabel;
+            switch (story.status) {
+                case 'published':
+                    statusClass = 'status-published';
+                    statusLabel = 'Published';
+                    break;
+                case 'pending_review':
+                    statusClass = 'status-pending';
+                    statusLabel = 'Pending Review';
+                    break;
+                case 'rejected':
+                    statusClass = 'status-rejected';
+                    statusLabel = 'Rejected';
+                    break;
+                default:
+                    statusClass = 'status-draft';
+                    statusLabel = 'Draft';
+            }
 
             html +=
                 '<div class="story-card" data-id="' + story.id + '">' +
@@ -69,9 +91,10 @@
                 '<span class="story-card-date">' + date + '</span>' +
                 '<div class="story-card-actions">' +
                 '<button class="story-action-btn edit-btn" data-id="' + story.id + '">Edit</button>' +
-                (story.status === 'draft' ?
-                    '<button class="story-action-btn publish publish-btn" data-id="' + story.id + '">Publish</button>' :
-                    '<button class="story-action-btn unpublish-btn" data-id="' + story.id + '">Unpublish</button>') +
+                (story.status === 'draft' || story.status === 'rejected' ?
+                    '<button class="story-action-btn publish publish-btn" data-id="' + story.id + '">Send to Review</button>' : '') +
+                (story.status === 'published' ?
+                    '<button class="story-action-btn unpublish-btn" data-id="' + story.id + '">Unpublish</button>' : '') +
                 '<button class="story-action-btn delete delete-btn" data-id="' + story.id + '">Delete</button>' +
                 '</div>' +
                 '</div>' +
@@ -90,7 +113,8 @@
             btn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 var id = btn.getAttribute('data-id');
-                openEditModal(id);
+                // Navigate to the chapter-based edit page
+                window.location.href = '/edit/' + id;
             });
         });
 
@@ -98,7 +122,7 @@
             btn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 var id = btn.getAttribute('data-id');
-                updateStoryStatus(id, 'published');
+                sendToReview(id);
             });
         });
 
@@ -121,17 +145,24 @@
         });
     }
 
-    function openEditModal(storyId) {
-        var story = allStories.find(function (s) { return s.id === storyId; });
-        if (!story) return;
-
-        editingStoryId = storyId;
-        document.getElementById('modalTitle').textContent = 'Edit Story';
-        document.getElementById('storyTitle').value = story.title || '';
-        document.getElementById('storyGenre').value = story.genre || '';
-        document.getElementById('storyTone').value = story.tone || '';
-        document.getElementById('storyContent').value = story.content || '';
-        document.getElementById('storyModal').classList.add('show');
+    function sendToReview(storyId) {
+        fetch('/api/moderation/publish/' + storyId, { method: 'POST' })
+            .then(function (resp) { return resp.json(); })
+            .then(function (result) {
+                if (result.error) {
+                    showToast(result.error);
+                } else if (result.status === 'published') {
+                    showToast('Story published!');
+                } else if (result.status === 'rejected') {
+                    showToast('Story rejected: ' + (result.rejectionReason || 'Content flagged'));
+                } else {
+                    showToast('Story sent for review!');
+                }
+                loadStories();
+            })
+            .catch(function () {
+                showToast('Failed to send story for review');
+            });
     }
 
     function updateStoryStatus(storyId, newStatus) {
@@ -151,7 +182,7 @@
         })
             .then(function (resp) { return resp.json(); })
             .then(function () {
-                showToast(newStatus === 'published' ? 'Story published!' : 'Story moved to drafts');
+                showToast('Story moved to drafts');
                 loadStories();
             })
             .catch(function () {
@@ -184,99 +215,6 @@
     });
 
     // ═══════════════════════════════════════
-    // Create / Edit Modal
-    // ═══════════════════════════════════════
-    var createBtn = document.getElementById('createStoryBtn');
-    var modal = document.getElementById('storyModal');
-    var modalClose = document.getElementById('modalCloseBtn');
-
-    if (createBtn) {
-        createBtn.addEventListener('click', function () {
-            editingStoryId = null;
-            document.getElementById('modalTitle').textContent = 'Create New Story';
-            document.getElementById('storyTitle').value = '';
-            document.getElementById('storyGenre').value = '';
-            document.getElementById('storyTone').value = '';
-            document.getElementById('storyContent').value = '';
-            modal.classList.add('show');
-        });
-    }
-
-    if (modalClose) {
-        modalClose.addEventListener('click', function () {
-            modal.classList.remove('show');
-        });
-    }
-
-    if (modal) {
-        modal.addEventListener('click', function (e) {
-            if (e.target === modal) modal.classList.remove('show');
-        });
-    }
-
-    // Save as Draft
-    var saveDraftBtn = document.getElementById('saveDraftBtn');
-    if (saveDraftBtn) {
-        saveDraftBtn.addEventListener('click', function () {
-            saveStory('draft');
-        });
-    }
-
-    // Save & Publish
-    var publishBtn = document.getElementById('publishStoryBtn');
-    if (publishBtn) {
-        publishBtn.addEventListener('click', function () {
-            saveStory('published');
-        });
-    }
-
-    function saveStory(status) {
-        var title = document.getElementById('storyTitle').value.trim();
-        var genre = document.getElementById('storyGenre').value.trim();
-        var tone = document.getElementById('storyTone').value.trim();
-        var content = document.getElementById('storyContent').value.trim();
-
-        if (!title) {
-            showToast('Please enter a title');
-            return;
-        }
-        if (!content) {
-            showToast('Please write some content');
-            return;
-        }
-
-        var payload = {
-            title: title,
-            content: content,
-            genre: genre,
-            tone: tone,
-            status: status
-        };
-
-        var url = editingStoryId ? '/api/stories/' + editingStoryId : '/api/stories';
-        var method = editingStoryId ? 'PUT' : 'POST';
-
-        fetch(url, {
-            method: method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        })
-            .then(function (resp) { return resp.json(); })
-            .then(function (data) {
-                if (data.error) {
-                    showToast(data.error);
-                } else {
-                    showToast(editingStoryId ? 'Story updated!' : 'Story created!');
-                    modal.classList.remove('show');
-                    loadStories();
-                }
-            })
-            .catch(function () {
-                showToast('Failed to save story');
-            });
-    }
-
-    // ═══════════════════════════════════════
     // Toast
     // ═══════════════════════════════════════
     function showToast(msg) {
@@ -293,13 +231,6 @@
         d.textContent = text;
         return d.innerHTML;
     }
-
-    // Escape key closes modal
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal) {
-            modal.classList.remove('show');
-        }
-    });
 
     // ─── Init ───
     loadStories();

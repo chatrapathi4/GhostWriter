@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Ghost Writer — Create stories with chapters.">
-    <title>Write Story — Ghost Writer</title>
+    <meta name="description" content="Ghost Writer — Edit your story and chapters.">
+    <title>Edit Story — Ghost Writer</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/write.css">
@@ -53,48 +53,48 @@
         </div>
     </nav>
 
-    <!-- ─── Write Content ─── -->
+    <!-- ─── Edit Content ─── -->
     <div class="page-container">
         <div class="page-header"
             style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px">
             <div>
-                <h1 class="page-title" id="writePageTitle">✏️ Create New Story</h1>
-                <p class="page-subtitle">Write your story with chapters.</p>
+                <h1 class="page-title">✏️ Edit Story</h1>
+                <p class="page-subtitle">Edit story details and chapters.</p>
             </div>
-            <div class="write-actions-top">
-                <button class="create-story-btn" id="importTxtBtn" style="background:var(--purple)">
-                    <span>📄</span> Import TXT
-                </button>
-            </div>
+            <a href="/dashboard" class="create-story-btn" style="text-decoration:none;background:var(--purple)">
+                <span>←</span> Back to Dashboard
+            </a>
         </div>
 
         <!-- Story Metadata -->
         <div class="write-meta-section">
             <div class="form-group">
                 <label class="form-label">Title</label>
-                <input type="text" class="form-input" id="writeTitle" placeholder="Enter story title...">
+                <input type="text" class="form-input" id="editTitle" placeholder="Enter story title...">
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Genre</label>
-                    <input type="text" class="form-input" id="writeGenre" placeholder="e.g. Fantasy, Sci-Fi...">
+                    <input type="text" class="form-input" id="editGenre" placeholder="e.g. Fantasy, Sci-Fi...">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Tone</label>
-                    <input type="text" class="form-input" id="writeTone" placeholder="e.g. Dark, Humorous...">
+                    <input type="text" class="form-input" id="editTone" placeholder="e.g. Dark, Humorous...">
                 </div>
             </div>
             <div class="form-group">
                 <label class="form-label">Summary</label>
-                <textarea class="form-textarea" id="writeSummary" placeholder="Write a brief summary of your story..."
+                <textarea class="form-textarea" id="editSummary" placeholder="Write a brief summary of your story..."
                     style="min-height:100px"></textarea>
             </div>
             <div class="form-group">
                 <label class="form-label">Cover Image</label>
-                <input type="file" class="form-input" id="writeCoverFile" accept=".jpg,.jpeg,.png,.webp" style="padding:10px">
-                <input type="hidden" id="writeCoverImage" value="">
-                <div id="coverPreview" style="margin-top:10px;display:none">
-                    <img id="coverPreviewImg" src="" alt="Cover preview" style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid var(--border)">
+                <input type="file" class="form-input" id="editCoverFile" accept=".jpg,.jpeg,.png,.webp"
+                    style="padding:10px">
+                <input type="hidden" id="editCoverImage" value="">
+                <div id="editCoverPreview" style="margin-top:10px;display:none">
+                    <img id="editCoverPreviewImg" src="" alt="Cover preview"
+                        style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid var(--border)">
                 </div>
             </div>
         </div>
@@ -106,14 +106,17 @@
                 <button class="add-chapter-btn" id="addChapterBtn">+ Add Chapter</button>
             </div>
             <div class="write-chapters-list" id="chaptersList">
-                <!-- Chapters will be rendered here -->
+                <div class="empty-state">
+                    <div class="spinner"></div>
+                    <div class="empty-state-text">Loading chapters...</div>
+                </div>
             </div>
         </div>
 
         <!-- Actions -->
         <div class="write-footer-actions">
-            <button class="modal-btn modal-btn-secondary" id="saveDraftBtn">💾 Save as Draft</button>
-            <button class="modal-btn modal-btn-success" id="publishBtn">📤 Send to Review</button>
+            <button class="modal-btn modal-btn-secondary" id="saveMetaBtn">💾 Save Changes</button>
+            <button class="modal-btn modal-btn-success" id="sendReviewBtn">📤 Send to Review</button>
         </div>
     </div>
 
@@ -142,30 +145,6 @@
         </div>
     </div>
 
-    <!-- ─── Import TXT Modal ─── -->
-    <div class="modal-overlay" id="importModal">
-        <div class="modal-card" style="max-width:500px">
-            <div class="modal-header">
-                <span class="modal-title">📄 Import TXT File</span>
-                <button class="modal-close" id="importModalClose">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Select File</label>
-                    <input type="file" class="form-input" id="importFile" accept=".txt" style="padding:10px">
-                </div>
-                <p style="font-size:13px;color:var(--text-tertiary);line-height:1.5">
-                    The system will automatically split your text into chapters by detecting "Chapter" markers.
-                    If none are found, it will split every 1000-1500 words. You can edit chapter titles afterward.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn modal-btn-secondary" id="importCancel">Cancel</button>
-                <button class="modal-btn modal-btn-primary" id="importConfirm">Import & Split</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Toast -->
     <div id="toast" class="toast">
         <span id="toastMsg"></span>
@@ -189,7 +168,7 @@
         })();
     </script>
     <script src="/js/auth.js"></script>
-    <script src="/js/write.js"></script>
+    <script src="/js/story-edit.js"></script>
 </body>
 
 </html>

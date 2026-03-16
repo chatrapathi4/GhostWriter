@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Read a story on Ghost Writer.">
+    <title>Reading — Ghost Writer</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/read.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='56' font-size='56'>👻</text></svg>">
+</head>
+
+<body>
+
+    <!-- ─── Minimal Reader Toolbar ─── -->
+    <div class="reader-toolbar" id="readerToolbar">
+        <a href="#" class="reader-back" id="backLink">← Back to Story</a>
+        <div class="reader-controls">
+            <select class="reader-select" id="fontSelect">
+                <option value="serif">Serif</option>
+                <option value="sans-serif" selected>Sans-serif</option>
+                <option value="monospace">Monospace</option>
+            </select>
+            <select class="reader-select" id="bgSelect">
+                <option value="dark" selected>Dark</option>
+                <option value="sepia">Sepia</option>
+                <option value="light">Light</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- ─── Reading Content ─── -->
+    <div class="reader-container" id="readerContainer">
+        <div class="reader-loading" id="readerLoading">
+            <div class="spinner"></div>
+            <div>Loading chapter...</div>
+        </div>
+
+        <div class="reader-content" id="readerContent" style="display:none">
+            <div class="reader-chapter-info" id="chapterInfo"></div>
+            <h1 class="reader-chapter-title" id="chapterTitle"></h1>
+            <div class="reader-chapter-body" id="chapterBody"></div>
+
+            <!-- Next Chapter Arrow (Feature 7) -->
+            <div class="reader-next-chapter" id="nextChapterSection" style="display:none">
+                <div class="reader-next-divider"></div>
+                <div class="reader-next-label" id="nextChapterLabel">Next Chapter</div>
+                <button class="reader-next-arrow" id="nextChapterArrow" aria-label="Next chapter">
+                    <span class="arrow-icon">↓</span>
+                </button>
+            </div>
+
+            <!-- Chapter Navigation -->
+            <div class="reader-nav" id="readerNav">
+                <a href="#" class="reader-nav-btn" id="prevChapterLink" style="display:none">← Previous Chapter</a>
+                <span class="reader-nav-info" id="navInfo"></span>
+                <a href="#" class="reader-nav-btn" id="nextChapterLink" style="display:none">Next Chapter →</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/read.js"></script>
+</body>
+
+</html>
